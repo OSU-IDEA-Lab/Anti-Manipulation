@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Anti-Manipulation</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="brand">
+          <div class="brand-mark">AM</div>
+          <div>
+            <p class="eyebrow">Mediator for Combating Data-Driven Manipulation</p>
+            <h1>Anti-Manipulation</h1>
+          </div>
+        </div>
+        <div class="dataset-picker">
+          <label for="datasetSelect">Establish Connection to Data Source</label>
+          <div class="picker-row">
+            <select id="datasetSelect"></select>
+            <button id="loadDatasetBtn" type="button">Connect</button>
+          </div>
+          <p id="datasetStatus" class="status-text">No datasource connected.</p>
+        </div>
+      </header>
+
+      <main class="workspace">
+        <aside class="sidebar">
+          <section class="panel intent-panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Intent</p>
+                <h2>Query Builder</h2>
+              </div>
+              <div class="dataset-chip" id="datasetChip">Waiting</div>
+            </div>
+            <form id="queryForm">
+              <div id="facetSections" class="facet-sections"></div>
+              <div class="constraint-head">
+                <p class="panel-kicker">Ranking Constraint</p>
+                <div class="constraint-toggle">
+                  <label class="constraint-option">
+                    <input type="radio" name="rankingMode" value="featured">
+                    <span>Featured</span>
+                  </label>
+                  <label class="constraint-option">
+                    <input type="radio" name="rankingMode" value="custom" checked>
+                    <span>Custom</span>
+                  </label>
+                </div>
+              </div>
+              <div id="customRankingBuilder">
+                <div id="rankingConditions" class="ranking-condition-list"></div>
+                <div class="ranking-actions">
+                  <button class="ghost-btn ranking-add-btn" id="addRankingConditionBtn" type="button">Add Condition</button>
+                </div>
+              </div>
+              <button class="primary-btn full-width" type="submit">Submit Query</button>
+            </form>
+          </section>
+        </aside>
+
+        <section class="main-column">
+          <section class="overview-grid">
+            <article class="panel metric-card topk-card">
+              <label class="topk-field" for="topKInput">
+                <span class="metric-label">Top-K</span>
+                <input id="topKInput" name="topKInput" type="number" min="1" value="16">
+              </label>
+            </article>
+            <article class="panel metric-card">
+              <p class="metric-label">Ranking</p>
+              <p class="metric-value" id="rankingSummary">-</p>
+            </article>
+          </section>
+
+          <section class="panel analysis-panel">
+            <div class="panel-head">
+              <div>
+                <p class="panel-kicker">Algorithms</p>
+                <h2>Combat Data-Driven Manipulation</h2>
+              </div>
+            </div>
+            <div class="action-strip">
+              <button class="action-tile" id="analyzeBtn" type="button">
+                <span class="action-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 5-3 8-7 10-4-2-7-5-7-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+                </span>
+                <span class="action-copy">
+                  <strong>Analyze Trustworthiness</strong>
+                  <small>Alert User to</small>
+                </span>
+              </button>
+              <button class="action-tile" id="findInfluentialBtn" type="button">
+                <span class="action-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2.8 6.3-6.2 2.7 2.8-6.3z"/></svg>
+                </span>
+                <span class="action-copy">
+                  <strong>Reformulate Query </strong>
+                  <small>Find Influential Query</small>
+                </span>
+              </button>
+              <button class="action-tile" id="improveBtn" type="button">
+                <span class="action-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 0 0-.1-1l2-1.5-2-3.5-2.4 1a8 8 0 0 0-1.7-1l-.4-2.6h-4l-.4 2.6a8 8 0 0 0-1.7 1l-2.4-1-2 3.5 2 1.5a7 7 0 0 0 0 2l-2 1.5 2 3.5 2.4-1a8 8 0 0 0 1.7 1l.4 2.6h4l.4-2.6a8 8 0 0 0 1.7-1l2.4 1 2-3.5-2-1.5c.1-.3.1-.7.1-1z"/></svg>
+                </span>
+                <span class="action-copy">
+                  <strong>Best Reformulated Query</strong>
+                  <small>Minimize Manipulation</small>
+                </span>
+              </button>
+            </div>
+            <div id="analysisPanel" class="analysis-body">
+              <div class="empty-state">Reformulate and Refine Query.</div>
+            </div>
+          </section>
+
+          <section class="results-grid" id="resultsGrid">
+            <article class="panel table-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="panel-kicker">Source</p>
+                  <h2>Results</h2>
+                  <p id="resultSummary" class="table-note">No query.</p>
+                </div>
+                <div class="panel-actions">
+                  <button class="ghost-btn" id="saveResultBtn" type="button">Bookmark</button>
+                  <button class="ghost-btn preview-toggle-btn" id="toggleBookmarkPanelBtn" type="button">Hide Bookmark</button>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table id="resultTable"></table>
+              </div>
+            </article>
+            <article class="panel preview-panel" id="bookmarkPanel">
+              <div class="panel-head">
+                <div>
+                  <p class="panel-kicker">Saved</p>
+                  <h2>Bookmarked Summaries </h2>
+                </div>
+              </div>
+              <div id="bookmarkList" class="bookmark-list">
+                <div class="empty-state">Bookmark a result to keep its query summary here.</div>
+              </div>
+            </article>
+          </section>
+        </section>
+      </main>
+    </div>
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+  </html>

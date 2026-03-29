@@ -1,0 +1,8 @@
+model,brand,category,rating,price,best_seller,sales_last_month
+Tune 510BT,JBL,headphones,4.5,25.20,Y,100
+Q20i,Soundcore,headphones,4.6,39.99,N,99
+A10 Pro,Sisism,headphones,4.7,39.50,N,82
+Sports,Haoyuyan,headphones,3.9,299.99,N,55
+Crusher Evo,Skullcandy,headphones,4.7,18.99,N,12
+Riff,Skullcandy,headphones,4.8,29.99,N,10
+
